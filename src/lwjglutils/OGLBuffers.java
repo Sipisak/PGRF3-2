@@ -11,6 +11,7 @@ import org.lwjgl.BufferUtils;
 //import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL33.*;
 public class OGLBuffers {
+
 	static public class Attrib {
 		String name;
 		int dimension;

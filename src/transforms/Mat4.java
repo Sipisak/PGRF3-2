@@ -265,6 +265,25 @@ public class Mat4 {
 		assert(column >= 0 && column < 4);
 		return new Point3D(mat[0][column], mat[1][column], mat[2][column], mat[3][column]);
 	}
+	/**
+	 * Sets the values of a column in the matrix.
+	 *
+	 * @param index
+	 *            0-based column index
+	 * @param column
+	 *            new column vector
+	 * @return new Mat4 instance with the updated column
+	 */
+	public Mat4 setCol(final int index, final Point3D column) {
+		assert(index >= 0 && index < 4);
+		final Mat4 result = new Mat4(this);
+		result.mat[0][index] = column.getX();
+		result.mat[1][index] = column.getY();
+		result.mat[2][index] = column.getZ();
+		result.mat[3][index] = column.getW();
+		return result;
+	}
+
 
 	/**
 	 * Returns translation vector of matrix, (last row)
@@ -460,5 +479,6 @@ public class Mat4 {
 				mat[2][0], mat[2][1], mat[2][2], mat[2][3],
 				mat[3][0], mat[3][1], mat[3][2], mat[3][3]);
 	}
-	
+
+
 }

@@ -1,74 +1,57 @@
 package solids;
 
+import lwjglutils.OGLBuffers;
 public class Cube extends Solid {
 
     public Cube() {
         // vertex buffer
-        float[] vertices = {
-                // Front face
-                0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-                1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-                1.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-                0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-
-                // Back face
-                0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-                1.0f, 0.0f, 1.0f, 1.0f, 0.0f,
-                1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-                0.0f, 1.0f, 1.0f, 0.0f, 1.0f,
-
-                // Right face
-                1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-                1.0f, 0.0f, 1.0f, 1.0f, 0.0f,
-                1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-                1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-
-                // Left face
-                0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-                0.0f, 0.0f, 1.0f, 1.0f, 0.0f,
-                0.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-                0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-
-                // Top face
-                0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-                1.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-                1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-                0.0f, 1.0f, 1.0f, 0.0f, 1.0f,
-
-                // Bottom face
-                0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-                1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-                1.0f, 0.0f, 1.0f, 1.0f, 1.0f,
-                0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
+        float[] cube = {
+                // bottom (z-) face
+                1, 0, 0,	0, 0, -1,
+                0, 0, 0,	0, 0, -1,
+                1, 1, 0,	0, 0, -1,
+                0, 1, 0,	0, 0, -1,
+                // top (z+) face
+                1, 0, 1,	0, 0, 1,
+                0, 0, 1,	0, 0, 1,
+                1, 1, 1,	0, 0, 1,
+                0, 1, 1,	0, 0, 1,
+                // x+ face
+                1, 1, 0,	1, 0, 0,
+                1, 0, 0,	1, 0, 0,
+                1, 1, 1,	1, 0, 0,
+                1, 0, 1,	1, 0, 0,
+                // x- face
+                0, 1, 0,	-1, 0, 0,
+                0, 0, 0,	-1, 0, 0,
+                0, 1, 1,	-1, 0, 0,
+                0, 0, 1,	-1, 0, 0,
+                // y+ face
+                1, 1, 0,	0, 1, 0,
+                0, 1, 0,	0, 1, 0,
+                1, 1, 1,	0, 1, 0,
+                0, 1, 1,	0, 1, 0,
+                // y- face
+                1, 0, 0,	0, -1, 0,
+                0, 0, 0,	0, -1, 0,
+                1, 0, 1,	0, -1, 0,
+                0, 0, 1,	0, -1, 0
         };
 
-        // index buffer
-        int[] indices = {
-                // Front face
-                0, 1, 2, 0, 2, 3,
-
-                // Back face
-                4, 5, 6, 4, 6, 7,
-
-                // Right face
-                8, 9, 10, 8, 10, 11,
-
-                // Left face
-                12, 13, 14, 12, 14, 15,
-
-                // Top face
-                16, 17, 18, 16, 18, 19,
-
-                // Bottom face
-                20, 21, 22, 20, 22, 23,
+        int[] indexBufferData = new int[36];
+        for (int i = 0; i<6; i++){
+            indexBufferData[i*6] = i*4;
+            indexBufferData[i*6 + 1] = i*4 + 1;
+            indexBufferData[i*6 + 2] = i*4 + 2;
+            indexBufferData[i*6 + 3] = i*4 + 1;
+            indexBufferData[i*6 + 4] = i*4 + 2;
+            indexBufferData[i*6 + 5] = i*4 + 3;
+        }
+        OGLBuffers.Attrib[] attributes = {
+                new OGLBuffers.Attrib("inPosition", 3),
+                new OGLBuffers.Attrib("inNormal", 3)
         };
 
-        // describe the data
-        lwjglutils.OGLBuffers.Attrib[] attributes = {
-                new lwjglutils.OGLBuffers.Attrib("inPosition", 3), // 3 floats
-                new lwjglutils.OGLBuffers.Attrib("inTexCoord", 2) // 2 floats for texture coordinates
-        };
-
-        buffers = new lwjglutils.OGLBuffers(vertices, attributes, indices);
+        buffers = new OGLBuffers(cube, attributes, indexBufferData);
     }
 }
